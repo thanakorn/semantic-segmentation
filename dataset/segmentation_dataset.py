@@ -1,9 +1,10 @@
 import torch
+import torchvision.transforms as transforms
+import random
 from torch.utils.data import Dataset
 from os import listdir
 from os.path import join
 from skimage.io import imread
-import torchvision.transforms as transforms
 
 DEFAULT_TRANSFORM = transforms.Compose([
             transforms.ToTensor()
@@ -21,6 +22,8 @@ class SegmentationDataset(Dataset):
         return len(self.input_files)
 
     def __getitem__(self, index):
-        x = self.transform(imread(self.input_files[index])).float()
-        y = self.transform(imread(self.target_files[index])).squeeze().long()
+        x, y = imread(self.input_files[index]), imread(self.target_files[index])
+        if self.transform:
+            x = self.transform(x).float()
+            y = self.transform(y).squeeze().long()
         return x, y
