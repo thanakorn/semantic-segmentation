@@ -1,7 +1,5 @@
 import torch
-from torch.nn import Module, Conv2d, ReLU
-
-DEFAULT_BLOCK_CHANNELS = [3,64,128,256,512,1024]
+from torch.nn import Module, ReLU, Conv2d
 
 class Block(Module):
     def __init__(self,
